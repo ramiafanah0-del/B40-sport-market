@@ -1,1 +1,721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>B40 sport | أزياء رجالية</title>
+
+  <meta name="description" content="B40 sport - أزياء رجالية بفخامة ولمسة رياضية">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #080808;
+      --dark: #111111;
+      --orange: #ff6a00;
+      --orange-light: #ff8a2b;
+      --white: #ffffff;
+      --gray: #a7a7a7;
+      --card: #151515;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ===== HEADER ===== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8, 8, 8, 0.95);
+      border-bottom: 1px solid #242424;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      height: 78px;
+      padding: 0 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+    }
+
+    .logo-b40 {
+      color: var(--orange);
+      font-size: 28px;
+      letter-spacing: -2px;
+    }
+
+    .logo-sport {
+      font-size: 18px;
+      color: white;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: #ddd;
+      font-size: 14px;
+      transition: 0.25s;
+    }
+
+    nav a:hover {
+      color: var(--orange);
+    }
+
+    .cart-button {
+      background: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+    }
+
+    /* ===== HERO ===== */
+
+    .hero {
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+
+      background:
+        radial-gradient(circle at 15% 50%, rgba(255, 106, 0, 0.18), transparent 35%),
+        linear-gradient(135deg, #080808 0%, #111111 100%);
+    }
+
+    .hero-content {
+      width: min(1200px, 100%);
+      margin: auto;
+      padding: 80px 20px;
+    }
+
+    .hero-small {
+      color: var(--orange);
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      font-size: clamp(50px, 9vw, 100px);
+      line-height: 0.95;
+      margin-bottom: 25px;
+      font-weight: 800;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      max-width: 550px;
+      color: #bbb;
+      font-size: 18px;
+      margin-bottom: 35px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .primary-button,
+    .secondary-button {
+      display: inline-block;
+      padding: 13px 25px;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.25s;
+    }
+
+    .primary-button {
+      background: var(--orange);
+      color: white;
+    }
+
+    .primary-button:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+    }
+
+    .secondary-button {
+      border: 1px solid #444;
+      color: white;
+    }
+
+    .secondary-button:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    /* ===== SECTIONS ===== */
+
+    section {
+      padding: 80px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 35px;
+      gap: 20px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+    }
+
+    .section-title span {
+      color: var(--orange);
+    }
+
+    .section-title p {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    /* ===== CATEGORIES ===== */
+
+    .categories {
+      background: #0d0d0d;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .category {
+      min-height: 210px;
+      background:
+        linear-gradient(135deg, #191919, #0d0d0d);
+      border: 1px solid #242424;
+      border-radius: 18px;
+      padding: 25px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      transition: 0.3s;
+    }
+
+    .category:hover {
+      border-color: var(--orange);
+      transform: translateY(-5px);
+    }
+
+    .category-number {
+      color: var(--orange);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .category h3 {
+      font-size: 25px;
+    }
+
+    /* ===== PRODUCTS ===== */
+
+    .products {
+      background: var(--black);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid #242424;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: #444;
+    }
+
+    .product-image {
+      height: 270px;
+      background:
+        linear-gradient(135deg, #222, #101010);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: #666;
+      font-size: 14px;
+    }
+
+    .product-info {
+      padding: 18px;
+    }
+
+    .product-info h3 {
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .product-info p {
+      color: var(--gray);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .product-price {
+      color: var(--orange);
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    /* ===== ABOUT ===== */
+
+    .about {
+      background: #0d0d0d;
+    }
+
+    .about-box {
+      border: 1px solid #242424;
+      border-radius: 20px;
+      padding: 45px;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(255,106,0,.12), transparent 30%),
+        #111;
+    }
+
+    .about-box h2 {
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    .about-box h2 span {
+      color: var(--orange);
+    }
+
+    .about-box p {
+      color: #aaa;
+      max-width: 750px;
+    }
+
+    /* ===== FOOTER ===== */
+
+    footer {
+      background: #050505;
+      border-top: 1px solid #222;
+      padding: 40px 20px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .footer-logo span {
+      color: var(--orange);
+    }
+
+    .social {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social a {
+      color: #aaa;
+      transition: 0.25s;
+    }
+
+    .social a:hover {
+      color: var(--orange);
+    }
+
+    /* ===== MOBILE ===== */
+
+    @media (max-width: 800px) {
+
+      nav {
+        display: none;
+      }
+
+      .nav {
+        height: 70px;
+      }
+
+      .hero {
+        min-height: 580px;
+      }
+
+      .hero h1 {
+        font-size: 58px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-image {
+        height: 220px;
+      }
+
+      .about-box {
+        padding: 30px 20px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 450px) {
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-image {
+        height: 260px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .primary-button,
+      .secondary-button {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="nav">
+
+      <a href="#" class="logo">
+        <span class="logo-b40">B40</span>
+        <span class="logo-sport">sport</span>
+      </a>
+
+      <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#categories">التصنيفات</a>
+        <a href="#products">المنتجات</a>
+        <a href="#about">عن B40</a>
+      </nav>
+
+      <button class="cart-button">
+        🛒 السلة
+      </button>
+
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+
+  <main>
+
+    <section class="hero" id="home">
+
+      <div class="hero-content">
+
+        <div class="hero-small">
+          B40 SPORT
+        </div>
+
+        <h1>
+          فخامة<br>
+          <span>بلمسة رياضية</span>
+        </h1>
+
+        <p>
+          أزياء رجالية شبابية تجمع بين الأناقة،
+          الفخامة والستايل الرياضي في إطلالة واحدة.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a href="#products" class="primary-button">
+            اكتشف المنتجات
+          </a>
+
+          <a href="#categories" class="secondary-button">
+            تصفح التصنيفات
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+
+    <section class="categories" id="categories">
+
+      <div class="container">
+
+        <div class="section-title">
+
+          <div>
+            <h2>تسوق حسب <span>التصنيف</span></h2>
+          </div>
+
+          <p>
+            اختر الستايل المناسب لك
+          </p>
+
+        </div>
+
+
+        <div class="category-grid">
+
+          <a href="#products" class="category">
+            <div class="category-number">01</div>
+            <h3>تيشيرتات</h3>
+          </a>
+
+          <a href="#products" class="category">
+            <div class="category-number">02</div>
+            <h3>سويت شيرت</h3>
+          </a>
+
+          <a href="#products" class="category">
+            <div class="category-number">03</div>
+            <h3>بناطيل</h3>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+
+    <section class="products" id="products">
+
+      <div class="container">
+
+        <div class="section-title">
+
+          <div>
+            <h2>أحدث <span>المنتجات</span></h2>
+          </div>
+
+          <p>
+            المنتجات ستظهر هنا
+          </p>
+
+        </div>
+
+
+        <div class="product-grid">
+
+          <div class="product-card">
+
+            <div class="product-image">
+              صورة المنتج
+            </div>
+
+            <div class="product-info">
+              <h3>منتج جديد</h3>
+              <p>تفاصيل المنتج ستضاف لاحقًا</p>
+              <div class="product-price">
+                السعر قريبًا
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="product-card">
+
+            <div class="product-image">
+              صورة المنتج
+            </div>
+
+            <div class="product-info">
+              <h3>منتج جديد</h3>
+              <p>تفاصيل المنتج ستضاف لاحقًا</p>
+              <div class="product-price">
+                السعر قريبًا
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="product-card">
+
+            <div class="product-image">
+              صورة المنتج
+            </div>
+
+            <div class="product-info">
+              <h3>منتج جديد</h3>
+              <p>تفاصيل المنتج ستضاف لاحقًا</p>
+              <div class="product-price">
+                السعر قريبًا
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="product-card">
+
+            <div class="product-image">
+              صورة المنتج
+            </div>
+
+            <div class="product-info">
+              <h3>منتج جديد</h3>
+              <p>تفاصيل المنتج ستضاف لاحقًا</p>
+              <div class="product-price">
+                السعر قريبًا
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section class="about" id="about">
+
+      <div class="container">
+
+        <div class="about-box">
+
+          <h2>
+            مرحبًا بك في <span>B40 sport</span>
+          </h2>
+
+          <p>
+            متجر أزياء رجالية شبابية لمن يبحث عن إطلالة
+            تجمع بين الفخامة والطابع الرياضي العصري.
+            اكتشف تشكيلتنا واختر إطلالتك القادمة.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-content">
+
+      <div class="footer-logo">
+        <span>B40</span> sport
+      </div>
+
+      <div class="social">
+
+        <a href="#" target="_blank">
+          Instagram
+        </a>
+
+        <a href="#" target="_blank">
+          WhatsApp
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
