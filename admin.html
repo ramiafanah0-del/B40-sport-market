@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>B40 sport | لوحة التحكم الإدارية</title>
+
+  <meta name="description" content="لوحة التحكم الإدارية - B40 sport">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #080808;
+      --dark: #111111;
+      --orange: #ff6a00;
+      --orange-light: #ff8a2b;
+      --white: #ffffff;
+      --gray: #a7a7a7;
+      --card: #151515;
+      --success: #4ade80;
+      --danger: #ef4444;
+      --warning: #ff8a2b;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* ===== LOGIN PAGE ===== */
+
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(255, 106, 0, 0.18), transparent 35%),
+        linear-gradient(135deg, #080808 0%, #111111 100%);
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--card);
+      border: 1px solid #242424;
+      border-radius: 20px;
+      padding: 40px;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-logo {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .login-logo span {
+      color: var(--orange);
+    }
+
+    .login-subtitle {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      background: #111111;
+      border: 1px solid #242424;
+      border-radius: 10px;
+      color: var(--white);
+      font-family: inherit;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.1);
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      transition: 0.25s;
+      margin-top: 10px;
+    }
+
+    .login-button:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+    }
+
+    .login-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-error {
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    /* ===== UNAUTHORIZED PAGE ===== */
+
+    .unauthorized-page {
+      min-height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #080808 0%, #111111 100%);
+      padding: 20px;
+    }
+
+    .unauthorized-page.active {
+      display: flex;
+    }
+
+    .unauthorized-container {
+      text-align: center;
+    }
+
+    .unauthorized-container h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: var(--danger);
+    }
+
+    .unauthorized-container p {
+      color: var(--gray);
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    .unauthorized-container button {
+      padding: 10px 25px;
+      background: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.25s;
+    }
+
+    .unauthorized-container button:hover {
+      background: var(--orange-light);
+    }
+
+    /* ===== DASHBOARD ===== */
+
+    .dashboard {
+      display: none;
+    }
+
+    .dashboard.active {
+      display: flex;
+    }
+
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ===== SIDEBAR ===== */
+
+    .sidebar {
+      width: 250px;
+      background: var(--dark);
+      border-left: 1px solid #242424;
+      padding: 30px 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      right: 0;
+      top: 0;
+    }
+
+    .sidebar-logo {
+      padding: 0 20px;
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .sidebar-logo span {
+      color: var(--orange);
+    }
+
+    .sidebar-menu {
+      flex-grow: 1;
+      list-style: none;
+    }
+
+    .sidebar-item {
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 12px 20px;
+      color: #aaa;
+      transition: 0.25s;
+      border-right: 3px solid transparent;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      color: var(--orange);
+      border-right-color: var(--orange);
+      background: rgba(255, 106, 0, 0.05);
+    }
+
+    .sidebar-logout {
+      padding: 20px;
+      border-top: 1px solid #242424;
+    }
+
+    .logout-button {
+      width: 100%;
+      padding: 10px;
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.25s;
+    }
+
+    .logout-button:hover {
+      background: #dc2626;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+
+    .main-content {
+      flex-grow: 1;
+      margin-right: 250px;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    /* ===== PRODUCTS SECTION ===== */
+
+    .products-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .add-button {
+      padding: 10px 20px;
+      background: var(--orange);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.25s;
+    }
+
+    .add-button:hover {
+      background: var(--orange-light);
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 15px;
+      background: var(--card);
+      border: 1px solid #242424;
+      border-radius: 10px;
+      color: var(--white);
+      font-family: inherit;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+
+    .products-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    .products-table thead {
+      background: var(--card);
+    }
+
+    .products-table th {
+      padding: 15px;
+      text-align: right;
+      font-weight: 700;
+      color: var(--gray);
+      border-bottom: 1px solid #242424;
+      font-size: 13px;
+    }
+
+    .products-table td {
+      padding: 15px;
+      border-bottom: 1px solid #242424;
+      font-size: 14px;
+    }
+
+    .products-table tbody tr {
+      transition: 0.2s;
+    }
+
+    .products-table tbody tr:hover {
+      background: rgba(255, 106, 0, 0.05);
+    }
+
+    .product-name {
+      font-weight: 600;
+    }
+
+    .product-price {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .product-stock {
+      font-weight: 600;
+    }
+
+    .stock-good {
+      color: var(--success);
+    }
+
+    .stock-low {
+      color: var(--warning);
+    }
+
+    .stock-out {
+      color: var(--danger);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .edit-btn,
+    .delete-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      transition: 0.25s;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background: var(--orange);
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background: var(--orange-light);
+    }
+
+    .delete-btn {
+      background: var(--danger);
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background: #dc2626;
+    }
+
+    /* ===== MODAL ===== */
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--card);
+      border: 1px solid #242424;
+      border-radius: 20px;
+      padding: 30px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .modal-header h2 {
+      font-size: 24px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--gray);
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .close-btn:hover {
+      color: var(--white);
+    }
+
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      background: #111111;
+      border: 1px solid #242424;
+      border-radius: 10px;
+      color: var(--white);
+      font-family: inherit;
+      font-size: 14px;
+      min-height: 80px;
+      resize: vertical;
+      transition: 0.2s;
+    }
+
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.1);
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 25px;
+      grid-column: 1 / -1;
+    }
+
+    .modal-footer button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.25s;
+    }
+
+    .save-btn {
+      background: var(--orange);
+      color: white;
+    }
+
+    .save-btn:hover {
+      background: var(--orange-light);
+    }
+
+    .cancel-btn {
+      background: #444;
+      color: white;
+    }
+
+    .cancel-btn:hover {
+      background: #555;
+    }
+
+    .save-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ===== ALERT ===== */
+
+    .alert {
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+      font-weight: 600;
+    }
+
+    .alert.show {
+      display: block;
+    }
+
+    .alert-success {
+      background: rgba(74, 222, 128, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+
+    .alert-error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* ===== EMPTY STATE ===== */
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+    }
+
+    .empty-state p {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        flex-direction: row;
+        align-items: center;
+        padding: 15px 20px;
+        border-left: none;
+        border-bottom: 1px solid #242424;
+      }
+
+      .sidebar-logo {
+        margin-bottom: 0;
+        margin-left: 20px;
+      }
+
+      .sidebar-menu {
+        display: none;
+      }
+
+      .sidebar-logout {
+        padding: 0;
+        border-top: none;
+        margin-left: auto;
+      }
+
+      .logout-button {
+        width: auto;
+        padding: 8px 15px;
+        font-size: 12px;
+      }
+
+      .main-content {
+        margin-right: 0;
+        padding: 20px;
+      }
+
+      .products-table th,
+      .products-table td {
+        padding: 10px;
+        font-size: 12px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .edit-btn,
+      .delete-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+
+      .modal-body {
+        grid-template-columns: 1fr;
+      }
+
+      .products-header {
+        flex-direction: column;
+      }
+
+      .search-box {
+        min-width: auto;
+      }
+    }
+
+    .loading {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div class="login-page" id="loginPage">
+    <div class="login-container">
+      <div class="login-header">
+        <div class="login-logo">
+          <span>B40</span> sport
+        </div>
+        <p class="login-subtitle">لوحة التحكم الإدارية</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+          <div class="form-error" id="emailError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">كلمة المرور</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+          <div class="form-error" id="passwordError"></div>
+        </div>
+
+        <button type="submit" class="login-button" id="loginBtn">تسجيل الدخول</button>
+
+        <div class="form-error" id="loginError"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- UNAUTHORIZED PAGE -->
+  <div class="unauthorized-page" id="unauthorizedPage">
+    <div class="unauthorized-container">
+      <h1>غير مصرح</h1>
+      <p>ليس لديك صلاحيات للوصول إلى لوحة التحكم الإدارية</p>
+      <button id="unauthorizedLogoutBtn">تسجيل الخروج</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+    <div class="dashboard-wrapper">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <span>B40</span> sport
+        </div>
+
+        <ul class="sidebar-menu">
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link active" data-section="products">المنتجات</a>
+          </li>
+        </ul>
+
+        <div class="sidebar-logout">
+          <button class="logout-button" id="logoutBtn">تسجيل الخروج</button>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <div class="header">
+          <h1>المنتجات</h1>
+          <p>إدارة منتجات B40 sport</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <div class="products-header">
+          <button class="add-button" id="addProductBtn">+ إضافة منتج جديد</button>
+          <input type="text" class="search-box" id="searchBox" placeholder="ابحث عن منتج...">
+        </div>
+
+        <div id="productsContainer">
+          <table class="products-table">
+            <thead>
+              <tr>
+                <th>اسم المنتج</th>
+                <th>السعر</th>
+                <th>المخزون</th>
+                <th>الوصف</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--gray);">جاري التحميل...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">إضافة منتج جديد</h2>
+        <button type="button" class="close-btn" id="closeModalBtn">&times;</button>
+      </div>
+
+      <form id="productForm">
+        <div class="modal-body">
+          <div class="form-group full-width">
+            <label for="productName">اسم المنتج</label>
+            <input type="text" id="productName" name="name" maxlength="255" required>
+          </div>
+
+          <div class="form-group">
+            <label for="productPrice">السعر (₪)</label>
+            <input type="number" id="productPrice" name="price" step="0.01" min="0" required>
+          </div>
+
+          <div class="form-group">
+            <label for="productStock">المخزون</label>
+            <input type="number" id="productStock" name="stock" min="0" max="999999" required>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="productDescription">الوصف</label>
+            <textarea id="productDescription" name="description" maxlength="1000"></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="productImage">رابط الصورة</label>
+            <input type="url" id="productImage" name="image_url" maxlength="500" placeholder="https://example.com/image.jpg">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="productSizes">الأحجام (مفصولة بفواصل)</label>
+            <input type="text" id="productSizes" name="sizes" maxlength="500" placeholder="S, M, L, XL">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="cancel-btn" id="cancelBtn">إلغاء</button>
+            <button type="submit" class="save-btn" id="saveBtn">حفظ</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Supabase Integration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // ========== SECURITY & CONFIGURATION ==========
+    // 
+    // SECURITY ARCHITECTURE:
+    // 1. Authentication: Supabase Auth (passwords never in code)
+    // 2. Authorization: Row Level Security (RLS) on database
+    // 3. Admin Check: RLS queries "admins" table with auth.uid()
+    // 4. Product Operations: Only work if user is in admins table
+    // 5. Public Access: SELECT on products is public (for customers)
+    // 6. Keys: Only publishable key in client code
+    //
+
+    const SUPABASE_URL = 'https://ftjeunoetgxmtllfzqah.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_TQcjs7QYCPPUTqADYJKMAg_mjhJzKqX';
+    
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    // ========== DOM ELEMENTS ==========
+
+    const loginPage = document.getElementById('loginPage');
+    const unauthorizedPage = document.getElementById('unauthorizedPage');
+    const dashboard = document.getElementById('dashboard');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const unauthorizedLogoutBtn = document.getElementById('unauthorizedLogoutBtn');
+    const addProductBtn = document.getElementById('addProductBtn');
+    const searchBox = document.getElementById('searchBox');
+    const productModal = document.getElementById('productModal');
+    const productForm = document.getElementById('productForm');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const modalTitle = document.getElementById('modalTitle');
+    const productsTableBody = document.getElementById('productsTableBody');
+    const alert = document.getElementById('alert');
+
+    // ========== STATE ==========
+
+    let currentUser = null;
+    let isAdmin = false;
+    let allProducts = [];
+    let editingProductId = null;
+    let sessionCheckInterval = null;
+
+    // ========== INITIALIZATION & AUTH ==========
+
+    async function init() {
+      try {
+        await checkAuth();
+        if (currentUser) {
+          await checkAdminStatus();
+        }
+      } catch (err) {
+        console.error('Initialization error:', err);
+        showLoginPage();
+      }
+    }
+
+    async function checkAuth() {
+      try {
+        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+        
+        if (sessionError) {
+          console.error('Session check error:', sessionError);
+          showLoginPage();
+          return;
+        }
+
+        if (session && session.user) {
+          currentUser = session.user;
+          startSessionCheck();
+        } else {
+          currentUser = null;
+          showLoginPage();
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
+        currentUser = null;
+        showLoginPage();
+      }
+    }
+
+    async function checkAdminStatus() {
+      if (!currentUser) {
+        isAdmin = false;
+        return;
+      }
+
+      try {
+        // Try to load from admins table - RLS will check if user exists in admins table
+        const { data, error } = await supabaseClient
+          .from('admins')
+          .select('user_id')
+          .eq('user_id', currentUser.id)
+          .single();
+
+        if (error) {
+          // User is not in admins table
+          console.log('Admin check failed:', error);
+          isAdmin = false;
+          showUnauthorizedPage();
+        } else if (data) {
+          // User is an admin
+          isAdmin = true;
+          showDashboard();
+          await loadProducts();
+        } else {
+          isAdmin = false;
+          showUnauthorizedPage();
+        }
+      } catch (err) {
+        console.error('Error checking admin status:', err);
+        isAdmin = false;
+        showUnauthorizedPage();
+      }
+    }
+
+    function startSessionCheck() {
+      // Check session every 30 minutes
+      if (sessionCheckInterval) {
+        clearInterval(sessionCheckInterval);
+      }
+      sessionCheckInterval = setInterval(async () => {
+        try {
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          if (!session) {
+            currentUser = null;
+            isAdmin = false;
+            showLoginPage();
+            if (sessionCheckInterval) {
+              clearInterval(sessionCheckInterval);
+            }
+          }
+        } catch (err) {
+          console.error('Session refresh error:', err);
+        }
+      }, 30 * 60 * 1000);
+    }
+
+    // ========== INPUT VALIDATION ==========
+
+    function validateProductData(data) {
+      const errors = [];
+
+      // Validate name
+      if (!data.name || typeof data.name !== 'string') {
+        errors.push('اسم المنتج مطلوب');
+      } else if (data.name.trim().length === 0) {
+        errors.push('اسم المنتج لا يمكن أن يكون فارغاً');
+      } else if (data.name.length > 255) {
+        errors.push('اسم المنتج طويل جداً');
+      }
+
+      // Validate price
+      if (typeof data.price !== 'number' || data.price < 0) {
+        errors.push('السعر يجب أن يكون رقماً موجباً');
+      }
+
+      // Validate stock
+      if (typeof data.stock !== 'number' || data.stock < 0 || !Number.isInteger(data.stock)) {
+        errors.push('المخزون يجب أن يكون رقماً موجباً صحيحاً');
+      }
+
+      // Validate description length
+      if (data.description && data.description.length > 1000) {
+        errors.push('الوصف طويل جداً');
+      }
+
+      // Validate image URL
+      if (data.image_url) {
+        if (typeof data.image_url !== 'string') {
+          errors.push('رابط الصورة غير صحيح');
+        } else if (data.image_url.length > 500) {
+          errors.push('رابط الصورة طويل جداً');
+        } else if (data.image_url && !isValidUrl(data.image_url)) {
+          errors.push('رابط الصورة يجب أن يكون URL صحيح');
+        }
+      }
+
+      // Validate sizes
+      if (data.sizes && data.sizes.length > 500) {
+        errors.push('حقل الأحجام طويل جداً');
+      }
+
+      return errors;
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function isValidUrl(string) {
+      try {
+        new URL(string);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    // ========== LOGIN HANDLER ==========
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      // Clear previous errors
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+      document.getElementById('loginError').textContent = '';
+
+      // Client-side validation
+      if (!email || !password) {
+        if (!email) document.getElementById('emailError').textContent = 'البريد الإلكتروني مطلوب';
+        if (!password) document.getElementById('passwordError').textContent = 'كلمة المرور مطلوبة';
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        document.getElementById('emailError').textContent = 'البريد الإلكتروني غير صحيح';
+        return;
+      }
+
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = '<span class="loading">⏳</span> جاري التحقق...';
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (error) {
+          // Generic error message for security
+          throw new Error('فشل تسجيل الدخول');
+        }
+
+        if (!data.user) {
+          throw new Error('فشل تسجيل الدخول');
+        }
+
+        currentUser = data.user;
+        loginForm.reset();
+        
+        // Check if user is admin
+        await checkAdminStatus();
+      } catch (err) {
+        console.error('Login error:', err);
+        document.getElementById('loginError').textContent = 'فشل تسجيل الدخول. تحقق من بيانات الدخول.';
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'تسجيل الدخول';
+      }
+    });
+
+    // ========== LOGOUT HANDLER ==========
+
+    async function handleLogout() {
+      try {
+        await supabaseClient.auth.signOut();
+        currentUser = null;
+        isAdmin = false;
+        allProducts = [];
+        editingProductId = null;
+        
+        if (sessionCheckInterval) {
+          clearInterval(sessionCheckInterval);
+        }
+
+        showLoginPage();
+        loginForm.reset();
+      } catch (err) {
+        console.error('Logout failed:', err);
+        showAlert('فشل تسجيل الخروج', 'error');
+      }
+    }
+
+    logoutBtn.addEventListener('click', handleLogout);
+    unauthorizedLogoutBtn.addEventListener('click', handleLogout);
+
+    // ========== PRODUCT MANAGEMENT ==========
+
+    async function loadProducts() {
+      if (!isAdmin) {
+        showAlert('ليس لديك صلاحيات لعرض المنتجات', 'error');
+        return;
+      }
+
+      try {
+        // Try without ordering by created_at first in case it doesn't exist
+        const { data, error } = await supabaseClient
+          .from('products')
+          .select('*');
+
+        if (error) {
+          if (error.code === 'PGRST201' || error.status === 403) {
+            console.error('Access denied by RLS policy', error);
+            showAlert('ليس لديك صلاحيات لعرض المنتجات', 'error');
+            return;
+          }
+          throw error;
+        }
+
+        allProducts = data || [];
+        displayProducts(allProducts);
+      } catch (err) {
+        console.error('Error loading products:', err);
+        showAlert('فشل تحميل المنتجات', 'error');
+      }
+    }
+
+    function displayProducts(products) {
+      if (products.length === 0) {
+        productsTableBody.innerHTML = `
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                <p>لا توجد منتجات</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      productsTableBody.innerHTML = products.map(product => `
+        <tr>
+          <td class="product-name">${escapeHtml(product.name)}</td>
+          <td class="product-price">${product.price} ₪</td>
+          <td class="product-stock ${getStockClass(product.stock)}">${product.stock}</td>
+          <td>${product.description ? escapeHtml(product.description.substring(0, 30)) + '...' : '-'}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="edit-btn" onclick="editProduct(${product.id})">تعديل</button>
+              <button class="delete-btn" onclick="deleteProduct(${product.id})">حذف</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function getStockClass(stock) {
+      if (stock > 5) return 'stock-good';
+      if (stock > 0) return 'stock-low';
+      return 'stock-out';
+    }
+
+    // Add Product
+    addProductBtn.addEventListener('click', () => {
+      editingProductId = null;
+      productForm.reset();
+      modalTitle.textContent = 'إضافة منتج جديد';
+      saveBtn.textContent = 'إضافة';
+      productModal.classList.add('active');
+    });
+
+    // Edit Product
+    function editProduct(id) {
+      editingProductId = id;
+      const product = allProducts.find(p => p.id === id);
+
+      if (product) {
+        document.getElementById('productName').value = escapeHtml(product.name);
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productDescription').value = product.description ? escapeHtml(product.description) : '';
+        document.getElementById('productImage').value = product.image_url ? escapeHtml(product.image_url) : '';
+        
+        // Handle sizes
+        let sizesString = '';
+        if (product.sizes) {
+          if (typeof product.sizes === 'string') {
+            sizesString = escapeHtml(product.sizes);
+          } else if (Array.isArray(product.sizes)) {
+            sizesString = product.sizes.join(', ');
+          }
+        }
+        document.getElementById('productSizes').value = sizesString;
+
+        modalTitle.textContent = 'تعديل المنتج';
+        saveBtn.textContent = 'حفظ التعديلات';
+        productModal.classList.add('active');
+      }
+    }
+
+    // Delete Product
+    async function deleteProduct(id) {
+      if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+
+      try {
+        const { error } = await supabaseClient
+          .from('products')
+          .delete()
+          .eq('id', id);
+
+        if (error) {
+          if (error.code === 'PGRST201' || error.status === 403) {
+            showAlert('ليس لديك صلاحيات لحذف المنتجات', 'error');
+            return;
+          }
+          throw error;
+        }
+
+        showAlert('تم حذف المنتج بنجاح', 'success');
+        await loadProducts();
+      } catch (err) {
+        console.error('Error deleting product:', err);
+        showAlert('فشل حذف المنتج', 'error');
+      }
+    }
+
+    // Save Product
+    productForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const productData = {
+        name: document.getElementById('productName').value.trim(),
+        price: parseFloat(document.getElementById('productPrice').value),
+        stock: parseInt(document.getElementById('productStock').value),
+        description: document.getElementById('productDescription').value.trim(),
+        image_url: document.getElementById('productImage').value.trim(),
+        sizes: document.getElementById('productSizes').value.trim()
+      };
+
+      // Validate product data
+      const validationErrors = validateProductData(productData);
+      if (validationErrors.length > 0) {
+        showAlert(validationErrors.join(', '), 'error');
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span class="loading">⏳</span>';
+
+      try {
+        if (editingProductId) {
+          // Update - RLS will check authorization
+          const { error } = await supabaseClient
+            .from('products')
+            .update(productData)
+            .eq('id', editingProductId);
+
+          if (error) {
+            if (error.code === 'PGRST201' || error.status === 403) {
+              throw new Error('ليس لديك صلاحيات لتعديل المنتجات');
+            }
+            throw error;
+          }
+          showAlert('تم تحديث المنتج بنجاح', 'success');
+        } else {
+          // Insert - RLS will check authorization
+          const { error } = await supabaseClient
+            .from('products')
+            .insert([productData]);
+
+          if (error) {
+            if (error.code === 'PGRST201' || error.status === 403) {
+              throw new Error('ليس لديك صلاحيات لإضافة المنتجات');
+            }
+            throw error;
+          }
+          showAlert('تم إضافة المنتج بنجاح', 'success');
+        }
+
+        productModal.classList.remove('active');
+        productForm.reset();
+        editingProductId = null;
+        await loadProducts();
+      } catch (err) {
+        console.error('Error saving product:', err);
+        showAlert(err.message || 'فشل حفظ المنتج', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = editingProductId ? 'حفظ التعديلات' : 'إضافة';
+      }
+    });
+
+    // Search
+    searchBox.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const filtered = allProducts.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        (product.description && product.description.toLowerCase().includes(query))
+      );
+      displayProducts(filtered);
+    });
+
+    // ========== MODAL CONTROLS ==========
+
+    closeModalBtn.addEventListener('click', () => {
+      productModal.classList.remove('active');
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      productModal.classList.remove('active');
+    });
+
+    productModal.addEventListener('click', (e) => {
+      if (e.target === productModal) {
+        productModal.classList.remove('active');
+      }
+    });
+
+    // ========== VIEW MANAGEMENT ==========
+
+    function showLoginPage() {
+      loginPage.style.display = 'flex';
+      unauthorizedPage.classList.remove('active');
+      dashboard.classList.remove('active');
+    }
+
+    function showUnauthorizedPage() {
+      loginPage.style.display = 'none';
+      unauthorizedPage.classList.add('active');
+      dashboard.classList.remove('active');
+    }
+
+    function showDashboard() {
+      loginPage.style.display = 'none';
+      unauthorizedPage.classList.remove('active');
+      dashboard.classList.add('active');
+    }
+
+    // ========== ALERTS ==========
+
+    function showAlert(message, type) {
+      alert.textContent = message;
+      alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-error'} show`;
+
+      setTimeout(() => {
+        alert.classList.remove('show');
+      }, 4000);
+    }
+
+    // ========== START APPLICATION ==========
+
+    init();
+  </script>
+
+</body>
+</html>
