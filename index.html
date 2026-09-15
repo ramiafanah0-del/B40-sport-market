@@ -588,6 +588,7 @@
         </div>
 
 
+        <div id="productsGrid"></div>
         <div class="product-grid">
 
           <div class="product-card">
@@ -731,5 +732,35 @@ const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
+<script>
+  async function loadProducts() {
+    const { data, error } = await supabaseClient
+      .from('products')
+      .select('*');
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    const grid = document.getElementById('productsGrid');
+
+    grid.innerHTML = data.map(product => `
+      <div class="product-card">
+        <div class="product-image">
+          ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}">` : 'صورة المنتج'}
+        </div>
+
+        <div class="product-info">
+          <h3>${product.name}</h3>
+          <p>${product.description || ''}</p>
+          <div class="product-price">${product.price} ₪</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadProducts();
+</script>
 </body>
 </html>
