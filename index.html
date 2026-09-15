@@ -280,6 +280,9 @@
       border-radius: 15px;
       overflow: hidden;
       transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .product-card:hover {
@@ -298,6 +301,7 @@
 
       color: #666;
       font-size: 14px;
+      overflow: hidden;
     }
 
     .product-image img {
@@ -308,23 +312,90 @@
 
     .product-info {
       padding: 18px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-info h3 {
       font-size: 17px;
       margin-bottom: 5px;
+      font-weight: 700;
     }
 
     .product-info p {
       color: var(--gray);
       font-size: 13px;
       margin-bottom: 12px;
+      flex-grow: 1;
+      line-height: 1.5;
     }
 
     .product-price {
       color: var(--orange);
       font-size: 19px;
       font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .product-sizes {
+      margin-bottom: 12px;
+    }
+
+    .product-sizes label {
+      display: block;
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .sizes-container {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .size-option {
+      padding: 5px 10px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      background: transparent;
+      color: #ddd;
+    }
+
+    .size-option:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .product-stock {
+      font-size: 12px;
+      font-weight: 600;
+      padding-top: 10px;
+      border-top: 1px solid #242424;
+    }
+
+    .stock-available {
+      color: #4ade80;
+    }
+
+    .stock-low {
+      color: var(--orange);
+    }
+
+    .stock-out {
+      color: #ef4444;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 20px;
+      color: #aaa;
     }
 
     /* ===== ABOUT ===== */
@@ -682,23 +753,68 @@
         const grid = document.getElementById('productsGrid');
 
         if (!data || data.length === 0) {
-          grid.innerHTML = '<p style="color: #aaa; text-align: center; grid-column: 1 / -1;">No products available</p>';
+          grid.innerHTML = '<div class="empty-state">لا توجد منتجات متاحة حالياً</div>';
           return;
         }
 
-        grid.innerHTML = data.map(product => `
-          <div class="product-card">
-            <div class="product-image">
-              ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}">` : 'صورة المنتج'}
-            </div>
+        grid.innerHTML = data.map(product => {
+          // Parse sizes if it's a JSON string or array
+          let sizes = [];
+          if (product.sizes) {
+            if (typeof product.sizes === 'string') {
+              try {
+                sizes = JSON.parse(product.sizes);
+              } catch {
+                sizes = product.sizes.split(',').map(s => s.trim());
+              }
+            } else if (Array.isArray(product.sizes)) {
+              sizes = product.sizes;
+            }
+          }
 
-            <div class="product-info">
-              <h3>${product.name}</h3>
-              <p>${product.description || ''}</p>
-              <div class="product-price">${product.price} ₪</div>
+          // Determine stock status
+          const stock = product.stock || 0;
+          let stockStatus = '';
+          let stockClass = '';
+
+          if (stock <= 0) {
+            stockStatus = 'غير متوفر';
+            stockClass = 'stock-out';
+          } else if (stock <= 5) {
+            stockStatus = `متوفر - ${stock} فقط`;
+            stockClass = 'stock-low';
+          } else {
+            stockStatus = `متوفر - ${stock}`;
+            stockClass = 'stock-available';
+          }
+
+          return `
+            <div class="product-card">
+              <div class="product-image">
+                ${product.image_url ? `<img src="${product.image_url}" alt="${product.name}">` : '<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">صورة المنتج</div>'}
+              </div>
+
+              <div class="product-info">
+                <h3>${product.name}</h3>
+                <p>${product.description || ''}</p>
+                <div class="product-price">${product.price} ₪</div>
+                
+                ${sizes.length > 0 ? `
+                  <div class="product-sizes">
+                    <label>الأحجام المتاحة:</label>
+                    <div class="sizes-container">
+                      ${sizes.map(size => `<button class="size-option">${size}</button>`).join('')}
+                    </div>
+                  </div>
+                ` : ''}
+                
+                <div class="product-stock">
+                  <span class="${stockClass}">${stockStatus}</span>
+                </div>
+              </div>
             </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } catch (err) {
         console.error('Error in loadProducts:', err);
       }
